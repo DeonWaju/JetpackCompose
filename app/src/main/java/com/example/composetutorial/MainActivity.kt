@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LoadingList() {
-    LazyColumn{
+    LazyRow{
+
         items(400) {
             DefaultPreview()
         }
