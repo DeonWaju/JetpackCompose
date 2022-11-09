@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DefaultPreview()
+//            DefaultPreview()
+            LoadingList()
         }
     }
 
@@ -39,7 +41,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(
+fun LoadingList() {
+    LazyColumn{
+        items(400) {
+            DefaultPreview()
+        }
+    }
+
+}
+
+@Composable
+fun ImageCard(
     painter: Painter,
     title: String,
     desc: String,
@@ -99,7 +111,7 @@ fun DefaultPreview() {
             .fillMaxWidth(0.5f)
             .padding(16.dp)
     ) {
-        Greeting(
+        ImageCard(
             painter = painter,
             title = title,
             desc = desc
