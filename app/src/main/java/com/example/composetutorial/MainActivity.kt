@@ -29,30 +29,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-
-    Row(
-        modifier = Modifier
-            .width(300.dp)
-            .fillMaxHeight(0.2f)
-            .background(Color.Blue)
-            .border(BorderStroke(2.dp, color = Color.Black))
-    ) {
-        Text(text = "Hello $name!")
-        Text(text = "Hello $name!")
-        Text(text = "World $name!")
-
-    }
     Column(
         modifier = Modifier
-            .width(300.dp)
-            .fillMaxHeight(0.7f)
+            .fillMaxHeight(1f)
+            .fillMaxWidth(1f)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
             .background(Color.Blue)
             .border(BorderStroke(2.dp, color = Color.Black))
     ) {
-        Text(text = "Hello $name!")
+        Text(text = "Hello $name!", modifier = Modifier.offset(20.dp, 50.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Text(text = "Hello $name!")
         Text(text = "World $name!")
-
     }
 }
 
