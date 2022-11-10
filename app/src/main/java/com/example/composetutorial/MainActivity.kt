@@ -38,13 +38,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            DefaultPreview()
-            Animation()
+            DefaultPreview()
         }
     }
-
 }
-
 
 @Composable
 fun Animation() {
@@ -75,7 +72,7 @@ fun Animation() {
         initialValue = Color.Red ,
         targetValue = Color.Green,
         animationSpec = infiniteRepeatable(
-            tween(durationMillis = 50000),
+            tween(durationMillis = 3000),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -102,7 +99,6 @@ fun Animation() {
     }
 
 }
-
 
 @Composable
 fun EffectHandlers() {
@@ -166,11 +162,11 @@ fun LoadingList() {
 
 @Composable
 fun ImageCard(
-    painter: Painter,
-    title: String,
-    desc: String,
     modifier: Modifier = Modifier
 ) {
+    val painter = painterResource(id = R.drawable.bvb)
+    val title = "Borrusia"
+    val desc = "This is BVB"
 
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -216,19 +212,13 @@ fun ImageCard(
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val painter = painterResource(id = R.drawable.bvb)
-    val title = "Borrusia"
-    val desc = "This is BVB"
 
     Box(
         modifier = Modifier
-            .fillMaxWidth(0.5f)
+            .fillMaxHeight()
+            .fillMaxWidth()
             .padding(16.dp)
     ) {
-        ImageCard(
-            painter = painter,
-            title = title,
-            desc = desc
-        )
+        Animation()
     }
 }
