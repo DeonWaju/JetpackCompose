@@ -3,6 +3,8 @@ package com.example.composetutorial
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,11 +13,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -33,17 +32,88 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
 //            DefaultPreview()
-//            LoadingList()
-            ConstrainLayout()
+            Animation()
         }
     }
 
+}
+
+
+@Composable
+fun Animation() {
+    var sizeState by remember {
+        mutableStateOf(200.dp)
+    }
+
+    val size by animateDpAsState(
+        targetValue = sizeState,
+        tween(
+            durationMillis = 3000,
+            delayMillis = 300,
+            easing = LinearOutSlowInEasing
+        )
+//        spring(
+//            Spring.DampingRatioHighBouncy
+//        )
+//        keyframes {
+//            durationMillis = 3000
+//            sizeState at 0 with LinearEasing
+//            sizeState * 1.5f at 1000 with FastOutLinearInEasing
+//            sizeState * 2f at 5000
+//        }
+    )
+
+    val infiniteTransition = rememberInfiniteTransition()
+    val color by infiniteTransition.animateColor(
+        initialValue = Color.Red ,
+        targetValue = Color.Green,
+        animationSpec = infiniteRepeatable(
+            tween(durationMillis = 50000),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    Box(
+        modifier = Modifier
+            .size(size)
+            .background(color),
+        contentAlignment = Alignment.Center
+    ) {
+        Column() {
+
+            Button(onClick = {
+                sizeState += 50.dp
+            }) {
+                Text(text = "Increase size")
+            }
+            Button(onClick = {
+                sizeState -= 50.dp
+            }) {
+                Text(text = "Reduce size")
+            }
+        }
+    }
+
+}
+
+
+@Composable
+fun EffectHandlers() {
+    var text by remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(key1 = text) {
+        delay(3000L)
+        println("$text")
+    }
 }
 
 @Composable
