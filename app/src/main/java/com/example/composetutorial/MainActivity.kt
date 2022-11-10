@@ -22,11 +22,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,16 +39,53 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 //            DefaultPreview()
-            LoadingList()
+//            LoadingList()
+            ConstrainLayout()
         }
     }
-
 
 }
 
 @Composable
+fun ConstrainLayout() {
+    val constraints = ConstraintSet {
+        val greenBox = createRefFor("greenBox")
+        val redBox = createRefFor("redBox")
+        val guidelines = createGuidelineFromTop(0.5f)
+
+        constrain(greenBox) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            width = Dimension.value(100.dp)
+            height = Dimension.value(100.dp)
+        }
+
+        constrain(redBox) {
+            top.linkTo(greenBox.bottom)
+            start.linkTo(parent.start)
+            width = Dimension.value(100.dp)
+            height = Dimension.value(100.dp)
+        }
+        createHorizontalChain(greenBox, redBox, chainStyle = ChainStyle.Packed)
+    }
+
+    ConstraintLayout(constraintSet = constraints, modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .background(Color.Green)
+                .layoutId("greenBox")
+        )
+        Box(
+            modifier = Modifier
+                .background(Color.Red)
+                .layoutId("redBox")
+        )
+    }
+}
+
+@Composable
 fun LoadingList() {
-    LazyRow{
+    LazyRow {
 
         items(400) {
             DefaultPreview()
